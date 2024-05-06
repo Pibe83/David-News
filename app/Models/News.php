@@ -10,7 +10,13 @@ class News extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'subtitle', 'content', 'slug', 'photo'];
+    protected $fillable = [
+        'title',
+        'subtitle',
+        'content',
+        'slug',
+        'photo',
+    ];
 
     public static function createSlug(string $string): string
     {
