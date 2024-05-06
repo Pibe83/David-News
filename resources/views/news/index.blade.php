@@ -70,7 +70,7 @@
                             @if (!empty($new->subtitle))
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $new->subtitle }}</h6>
                             @endif
-                            <p class="card-text">{{ $new->content }}</p>
+                            <p class="card-text mt-1">{{ $new->content }}</p>
 
                             <p class="card-text">Pubblicato: {{ $new->created_at->diffForHumans() }}</p>
                             @if ($new->user)
