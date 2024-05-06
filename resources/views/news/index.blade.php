@@ -65,7 +65,9 @@
 
                             </h5>
 
-
+                            @if (!empty($new->title))
+                                <h6 class="card-title mb-2 text-muted">{{ $new->title }}</h6>
+                            @endif
 
                             @if (!empty($new->subtitle))
                                 <h6 class="card-subtitle mb-2 text-muted">{{ $new->subtitle }}</h6>
@@ -81,18 +83,27 @@
                                 <p class="card-text">Ultima modifica: {{ $new->last_modified_at }}</p>
                             @endif
 
-                            <a href="{{ route('news.show', ['slug' => $new->slug]) }}"
-                               class="btn-sm btn-success">View Details</a>
+                            @if ($new->slug)
+                                <a href="{{ route('news.show', ['slug' => $new->slug]) }}"
+                                   class="btn-sm btn-success">View Details</a>
+                            @else
+                                <!-- Altra logica per la visualizzazione della notizia senza lo slug -->
+                                <a href="{{ route('news.index') }}"
+                                   class="btn-sm btn-success">View Detailssssss</a>
+                            @endif
+
+
 
                             <a href="{{ route('news.edit', ['id' => $new->id]) }}"
                                class="btn btn-sm btn-primary">Modifica</a>
-                            <form action="{{ route('news.destroy', $new->slug) }}"
+                            <form action="{{ route('news.destroy', ['news' => $new->id]) }}"
                                   method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button class='mt-3'
+                                <button class="mt-3"
                                         type="submit">Cancella Notizia</button>
                             </form>
+
 
 
                         </div>
