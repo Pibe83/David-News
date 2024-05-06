@@ -62,7 +62,7 @@
 
 
                             <h5 class="card-title">
-                                {!! html_entity_decode($new->title) !!}
+
                             </h5>
 
 
