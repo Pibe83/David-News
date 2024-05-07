@@ -6,6 +6,12 @@ use Illuminate\Support\Str;
 
 trait NewsActions
 {
+    /**
+     * Create slug.
+     *
+     * @param  string $string
+     * @return string
+     */
     public static function createSlug(string $string): string
     {
         $slug = Str::slug($string);
