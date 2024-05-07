@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\QuotationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,11 @@ Route::delete('/comments/{commentId}/unlike', [LikeController::class, 'unlikeCom
 Route::get('/likes/{contentId}', [LikeController::class, 'countLikes'])->name('count.likes');
 
 Route::post('/comment/{commentId}/like', [CommentController::class, 'like'])->name('comment.like');
+
+Route::get('/quotations', [QuotationController::class, 'index'])->name('quotations.index');
+Route::get('/quotations/create', [QuotationController::class, 'create'])->name('quotations.create');
+Route::post('/quotations', [QuotationController::class, 'store'])->name('quotations.store');
+Route::get('/quotations/{quotation}', [QuotationController::class, 'show'])->name('quotations.show');
+Route::get('/quotations/{quotation}/edit', [QuotationController::class, 'edit'])->name('quotations.edit');
+Route::put('/quotations/{quotation}', [QuotationController::class, 'update'])->name('quotations.update');
+Route::delete('/quotations/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.destroy');
