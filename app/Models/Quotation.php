@@ -16,42 +16,39 @@ class Quotation extends Model
         'taxable_price',
         'tax_price',
         'is_editable',
+        'user_id',
     ];
 
-    // Genera UUID automaticamente prima di salvare il record nel database
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($quotation) {
-            $quotation->uuid = Str::uuid();
-        });
-    }
-
     // Mutators per UUID, Taxable e Tax
+    // Mutator per UUID
     public function getUuidAttribute($value)
     {
-        return Str::uuid($value);
+        return Str::uuid($value); // Converte l'UUID in un formato standard
     }
 
+    // Mutatori per Taxable e Tax
+    // Mutatore per il campo 'taxable_price'
     public function getTaxableAttribute()
     {
-        return $this->taxable_price;
+        return $this->taxable_price; // Ritorna il valore di 'taxable_price'
     }
 
+    // Mutatore per il campo 'tax_price'
     public function getTaxAttribute()
     {
-        return $this->tax_price;
+        return $this->tax_price; // Ritorna il valore di 'tax_price'
     }
 
+    // Setter per il campo 'taxable_price'
     public function setTaxableAttribute($value)
     {
-        $this->attributes['taxable_price'] = $value;
+        $this->attributes['taxable_price'] = $value; // Imposta il valore di 'taxable_price'
     }
 
+    // Setter per il campo 'tax_price'
     public function setTaxAttribute($value)
     {
-        $this->attributes['tax_price'] = $value;
+        $this->attributes['tax_price'] = $value; // Imposta il valore di 'tax_price'
     }
 
     // Relazione con l'utente
@@ -63,6 +60,6 @@ class Quotation extends Model
     // Metodo per verificare se la quotazione è modificabile
     public function isEditable()
     {
-        return $this->is_editable;
+        return $this->is_editable; // Ritorna il valore di 'is_editable'
     }
 }

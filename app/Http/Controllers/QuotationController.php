@@ -37,7 +37,9 @@ class QuotationController extends Controller
         $validatedData['user_id'] = $user->id; // Assegna l'id dell'utente alla quotazione
 
         // Salva la nuova quotazione nel database
-        // Quotation::create($validatedData);
+        Quotation::create($validatedData);
+
+        // dd($validatedData);
 
         // Ritorna una risposta appropriata
         return redirect()->route('quotations.store')
@@ -58,6 +60,11 @@ class QuotationController extends Controller
 
     public function update(Request $request, Quotation $quotation)
     {
+        // Verifica se l'utente è un amministratore
+        if (! auth()->user()->is_admin) {
+            return redirect()->route('quotations.index')->with('error', 'Solo gli amministratori possono aggiornare le quotazioni.');
+        }
+
         // Validazione dei dati del form
         $validatedData = $request->validate([
             // Inserisci qui le regole di validazione per i dati della quotazione
@@ -67,8 +74,7 @@ class QuotationController extends Controller
         $quotation->update($validatedData);
 
         // Ritorna una risposta appropriata
-        return redirect()->route('quotations.index')
-            ->with('success', 'Quotazione aggiornata con successo!');
+        return redirect()->route('quotations.index')->with('success', 'Quotazione aggiornata con successo!');
     }
 
     public function destroy(Quotation $quotation)
