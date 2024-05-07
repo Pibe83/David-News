@@ -2,6 +2,8 @@
 
 namespace App\Traits\Models\News;
 
+use Illuminate\Support\Str;
+
 trait NewsActions
 {
     public static function createSlug(string $string): string
