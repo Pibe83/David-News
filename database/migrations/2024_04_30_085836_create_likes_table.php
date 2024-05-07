@@ -13,6 +13,7 @@ class CreateLikesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('likeable_id');
             $table->string('likeable_type');
+            $table->integer('content_id');
             $table->timestamps();
 
             $table->unique(['user_id', 'likeable_id', 'likeable_type']);
