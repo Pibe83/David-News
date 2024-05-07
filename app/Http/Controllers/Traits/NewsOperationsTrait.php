@@ -39,33 +39,4 @@ trait NewsOperationsTrait
         $news = News::where('slug', $slug)->firstOrFail();
         $news->delete();
     }
-
-    public function showNews($slug)
-    {
-        $news = News::where('slug', $slug)->first();
-
-        if (! $news) {
-            return redirect()->route('home');
-        }
-
-        return view('news.show', compact('news'));
-    }
-
-    public function indexNews()
-    {
-        $news = News::all();
-
-        return view('news.index', ['news' => $news]);
-    }
-
-    public function showBySlug(?string $slug = null)
-    {
-        $news = News::where('slug', $slug)->first();
-
-        if (! $news) {
-            return redirect()->route('home');
-        }
-
-        return view('news.show', compact('news'));
-    }
 }

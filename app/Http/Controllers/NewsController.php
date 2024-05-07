@@ -10,6 +10,29 @@ class NewsController extends Controller
 {
     use NewsOperationsTrait;
 
+    public function index()
+    {
+        $news = News::all();
+
+        return view('news.index', compact('news'));
+    }
+
+    public function show(News $news)
+    {
+        return view('news.show', compact('news'));
+    }
+
+    public function showBySlug(string $slug)
+    {
+        $news = News::where('slug', $slug)->first();
+
+        if (! $news) {
+            return redirect()->route('home');
+        }
+
+        return view('news.show', compact('news'));
+    }
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -25,39 +48,18 @@ class NewsController extends Controller
             $validatedData['photo'] = $imagePath;
         }
 
-        // Utilizza la funzione createNews definita nel trait
         $news = News::create($validatedData);
 
-        return redirect()->route('news.show', ['slug' => $news->slug])->with('success', 'Notizia creata con successo!');
+        return redirect()->route('news.show', $news)
+            ->with('success', 'Notizia creata con successo!');
     }
 
-    public function show($slug)
+    public function edit(News $news)
     {
-        // Utilizza la funzione showNews definita nel trait
-        return $this->showNews($slug);
-    }
-
-    public function index()
-    {
-        return $this->indexNews();
-    }
-
-    public function destroy($slug)
-    {
-        $news = News::where('slug', $slug)->firstOrFail();
-        $news->delete();
-
-        return redirect()->route('news.index')->with('success', 'Notizia cancellata con successo!');
-    }
-
-    public function edit($id)
-    {
-        $news = News::findOrFail($id);
-
         return view('news.edit', compact('news'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -65,9 +67,17 @@ class NewsController extends Controller
             'content' => 'required|string',
         ]);
 
-        $news = News::findOrFail($id);
         $news->update($validatedData);
 
-        return redirect()->route('news.show', ['slug' => $news->slug])->with('success', 'News updated successfully');
+        return redirect()->route('news.show', $news)
+            ->with('success', 'Notizia aggiornata con successo!');
+    }
+
+    public function destroy(News $news)
+    {
+        $news->delete();
+
+        return redirect()->route('news.index')
+            ->with('success', 'Notizia cancellata con successo!');
     }
 }

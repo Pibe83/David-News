@@ -23,7 +23,6 @@
         /* Aggiungi uno shadow su hover */
     }
 
-
     .comments-section {
         margin-top: 10px;
         margin-bottom: 10px;
@@ -51,7 +50,109 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 my-5 ">
+            <div class="col-md my-5 ">
+
+                <h2 class="mb-3">News</h2>
+
+                <table class="border w-100 mb-5">
+                    <tbody>
+                        @foreach ($news as $new)
+                            <tr>
+                                <td class="border">
+                                    <a href="{{ route('news.show', $new) }}">
+                                        {!! $new->title !!}
+                                    </a>
+                                </td>
+                                <td class="border">
+                                    {{ $new->subtitle }}
+                                </td>
+                                <td class="border">
+                                    {{ $new->created_at->diffForHumans() }}
+                                </td>
+                                <td class="border text-center">
+                                    <a href="{{ route('news.edit', $new) }}">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </td>
+                                <td class="border text-center">
+                                    <form action="{{ route('news.destroy', $new) }}"
+                                          method="POST"
+                                          style="display: none;"
+                                          id="delete-form-{{ $new->id }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input type="submit"
+                                               value="Delete">
+                                    </form>
+                                    <a href="#"
+                                       onclick="event.preventDefault(); document.getElementById('delete-form-{{ $new->id }}').submit();">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </td>
+                                <td class="border text-center">
+                                    <a href="{{ route('news.show', $new) }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+
+                <div class="card mb-4 custom-card">
+                    <div class="card-body">
+
+                        <h3 class="mb-3">Nuova news</>
+
+                            <form action="{{ route('news.store') }}"
+                                  method="POST"
+                                  enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="title"
+                                           class="form-label">{{ __('Title') }}</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="title"
+                                           name="title"
+                                           required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subtitle"
+                                           class="form-label">{{ __('Subtitle') }}</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           id="subtitle"
+                                           name="subtitle"
+                                           required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="content"
+                                           class="form-label">{{ __('Content') }}</label>
+                                    <textarea class="form-control"
+                                              id="content"
+                                              name="content"
+                                              rows="5"
+                                              required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="photo"
+                                           class="form-label">{{ __('Photo') }}</label>
+                                    <input type="file"
+                                           class="form-control"
+                                           id="photo"
+                                           name="photo"> <!-- Aggiunto campo di input di tipo file per il caricamento dell'immagine -->
+                                </div>
+
+                                <button type="submit"
+                                        class="btn btn-primary">{{ __('Create News') }}</button>
+                                <a href="{{ route('news.index') }}"
+                                   class="btn btn-secondary">{{ __('Back to News') }}</a>
+                            </form>
+                    </div>
+                </div>
+
                 @foreach ($news as $new)
                     <div class="card mb-4 custom-card">
                         <div class="card-body">
@@ -84,8 +185,8 @@
                             @endif
 
                             @if ($new->slug)
-                                <a href="{{ route('news.show', ['slug' => $new->slug]) }}"
-                                   class="btn-sm btn-success">View Details</a>
+                                {{-- <a href="{{ route('news.show', ['slug' => $new->slug]) }}" --}}
+                                class="btn-sm btn-success">View Details</a>
                             @else
                                 <!-- Altra logica per la visualizzazione della notizia senza lo slug -->
                                 <a href="{{ route('news.index') }}"
@@ -94,14 +195,14 @@
 
 
 
-                            <a href="{{ route('news.edit', ['id' => $new->id]) }}"
-                               class="btn btn-sm btn-primary">Modifica</a>
-                            <form action="{{ route('news.destroy', ['news' => $new->id]) }}"
-                                  method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="mt-3"
-                                        type="submit">Cancella Notizia</button>
+                            {{-- <a href="{{ route('news.edit', ['id' => $new->id]) }}" --}}
+                            class="btn btn-sm btn-primary">Modifica</a>
+                            {{-- <form action="{{ route('news.destroy', ['news' => $new->id]) }}" --}}
+                            method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="mt-3"
+                                    type="submit">Cancella Notizia</button>
                             </form>
 
 

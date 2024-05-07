@@ -26,20 +26,27 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('/news/create', [NewsController::class, 'create'])->name('news.create');
-Route::post('/news', [NewsController::class, 'store'])->name('news.store');
-
-Route::get('news/{slug}', [NewsController::class, 'showBySlug'])->name('news.show');
-
-Route::get('/news/{slug?}', [NewsController::class, 'index'])->name('news.index');
-
-Route::delete('/news/{slug}', [NewsController::class, 'destroy'])->name('news.destroy');
-
-Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
-
-Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('news.destroy');
-
-Route::put('/news/{id}', [NewsController::class, 'update'])->name('news.update');
+/*
+ * NEWS
+ */
+Route::prefix('news')
+    ->name('news.')
+    ->group(function () {
+        Route::get('', [NewsController::class, 'index'])
+            ->name('index');
+        Route::get('slug/{slug?}', [NewsController::class, 'showBySlug'])
+            ->name('showBySlug');
+        Route::post('', [NewsController::class, 'store'])
+            ->name('store');
+        Route::get('{news}', [NewsController::class, 'show'])
+            ->name('show');
+        Route::get('{news}/edit', [NewsController::class, 'edit'])
+            ->name('edit');
+        Route::put('{news}/edit', [NewsController::class, 'update'])
+            ->name('update');
+        Route::delete('{news}/destroy', [NewsController::class, 'destroy'])
+            ->name('destroy');
+    });
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 

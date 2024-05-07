@@ -35,6 +35,10 @@
                    href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                <a class=""
+                   href="{{ route('news.index') }}">
+                    News
+                </a>
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
