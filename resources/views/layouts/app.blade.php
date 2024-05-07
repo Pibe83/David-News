@@ -22,6 +22,9 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
+    <script src="https://kit.fontawesome.com/f8ef945a8e.js"
+            crossorigin="anonymous"></script>
 </head>
 
 <body>
