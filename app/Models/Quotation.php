@@ -31,7 +31,7 @@ class Quotation extends Model
     // Mutators per UUID, Taxable e Tax
     public function getUuidAttribute($value)
     {
-        return Str::uuid();
+        return Str::uuid($value);
     }
 
     public function getTaxableAttribute()

@@ -65,6 +65,27 @@
                            class="btn btn-secondary">{{ __('Back to News') }}</a>
                     </form>
                 </div>
+
+
+                <form action="{{ route('quotations.store') }}"
+                      method="POST">
+                    @csrf
+
+                    <label for="total_price">Prezzo Lordo:</label>
+                    <input type="number"
+                           id="total_price"
+                           name="total_price"
+                           step="0.01"
+                           required>
+
+
+
+
+                    <!-- Aggiungi altri campi se necessario -->
+
+                    <button type="submit">Salva</button>
+                </form>
+
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quotation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuotationController extends Controller
 {
@@ -27,15 +28,19 @@ class QuotationController extends Controller
         // Validazione dei dati del form
         $validatedData = $request->validate([
             'total_price' => 'required|numeric',
-            'taxable_price' => 'required|numeric',
+            'taxable_price' => 'nullable|numeric',
             'tax_price' => 'nullable|numeric',
         ]);
 
+        // Aggiungi l'utente predefinito
+        $user = Auth::user(); // Ottieni l'utente attualmente autenticato
+        $validatedData['user_id'] = $user->id; // Assegna l'id dell'utente alla quotazione
+
         // Salva la nuova quotazione nel database
-        Quotation::create($validatedData);
+        // Quotation::create($validatedData);
 
         // Ritorna una risposta appropriata
-        return redirect()->route('quotations.index')
+        return redirect()->route('quotations.store')
             ->with('success', 'Quotazione creata con successo!');
     }
 
