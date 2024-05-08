@@ -60,6 +60,9 @@ class QuotationController extends Controller
         }
 
         $validatedData = $request->validate([
+            'total_price' => 'required|numeric',
+            'taxable_price' => 'nullable|numeric',
+            'tax_price' => 'nullable|numeric',
         ]);
 
         $quotation->update($validatedData);

@@ -13,7 +13,7 @@
                             <th>Taxable Price</th>
                             <th>Tax Price</th>
                             <th>Editable</th>
-                            <th>Actions</th> <!-- Aggiungi una nuova colonna per le azioni -->
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,27 +27,28 @@
                                 <td>{{ $quotation->is_editable ? 'Yes' : 'No' }}</td>
 
                                 <td>
-
-
                                     @if (auth()->user()->is_admin)
-                                        <form action="{{ route('quotations.update', $quotation) }}"
-                                              method="POST">
+                                        <form action="{{ route('quotations.edit', $quotation) }}"
+                                              method="GET"
+                                              class="d-inline">
                                             @csrf
-                                            @method('PATCH')
+
                                             <button type="submit"
-                                                    class="btn btn-success">Toggle Editable</button>
+                                                    class="btn btn-link"><i class="fa-solid fa-pen-to-square"></i></button>
                                         </form>
                                     @endif
                                     <form action="{{ route('quotations.destroy', $quotation) }}"
                                           method="POST"
                                           style="display: inline;"
-                                          onsubmit="return confirm('Are you sure you want to delete this quotation?')">
+                                          onsubmit="return confirm('Are you sure you want to delete this quotation?')"
+                                          class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                                class="btn btn-danger">Delete</button>
+                                                class="btn btn-link"><i class="fa-solid fa-trash"></i></button>
                                     </form>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>

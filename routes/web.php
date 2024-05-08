@@ -26,6 +26,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/quotation', [QuotationController::class, 'index'])->name('quotation');
+
 /*
  * NEWS
  */
@@ -70,7 +72,7 @@ Route::prefix('quotations')
             ->name('show');
         Route::get('{quotation}/edit', [QuotationController::class, 'edit'])
             ->name('edit');
-        Route::put('{quotation}', [QuotationController::class, 'update'])
+        Route::patch('{quotation}', [QuotationController::class, 'update'])
             ->name('update');
         Route::delete('{quotation}', [QuotationController::class, 'destroy'])
             ->name('destroy');

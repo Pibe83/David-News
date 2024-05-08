@@ -39,6 +39,23 @@
                    href="{{ route('news.index') }}">
                     News
                 </a>
+
+                <a class="ms-5"
+                   href="{{ route('quotations.index') }}">
+                    Quotations
+                </a>
+
+                <a class="ms-5"
+                   href="{{ route('home') }}">
+                    Add News
+                </a>
+
+                <a class="ms-5"
+                   href="{{ route('home') }}">
+                    Add Quotation
+                </a>
+
+
                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
