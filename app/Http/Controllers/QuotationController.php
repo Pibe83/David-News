@@ -54,6 +54,11 @@ class QuotationController extends Controller
 
     public function edit(Quotation $quotation)
     {
+        // Verifica se l'utente è un amministratore
+        if (! auth()->user()->is_admin) {
+            return redirect()->route('quotations.index')->with('error', 'Solo gli amministratori possono modificare le quotazioni.');
+        }
+
         // Ritorna la vista per modificare una quotazione esistente
         return view('quotations.edit', compact('quotation'));
     }
@@ -77,13 +82,11 @@ class QuotationController extends Controller
         return redirect()->route('quotations.index')->with('success', 'Quotazione aggiornata con successo!');
     }
 
-    public function destroy(Quotation $quotation)
+    public function destroy($id)
     {
-        // Elimina la quotazione dal database
+        $quotation = Quotation::findOrFail($id);
         $quotation->delete();
 
-        // Ritorna una risposta appropriata
-        return redirect()->route('quotations.index')
-            ->with('success', 'Quotazione eliminata con successo!');
+        return response()->json(['message' => 'Quotation deleted successfully'], 200);
     }
 }

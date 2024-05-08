@@ -20,20 +20,33 @@
                         @foreach ($quotations as $quotation)
                             <tr>
                                 <td>{{ $quotation->id }}</td>
+
                                 <td>{{ $quotation->total_price }}</td>
                                 <td>{{ $quotation->taxable_price }}</td>
                                 <td>{{ $quotation->tax_price }}</td>
                                 <td>{{ $quotation->is_editable ? 'Yes' : 'No' }}</td>
+
                                 <td>
+
+
                                     @if (auth()->user()->is_admin)
                                         <form action="{{ route('quotations.update', $quotation->id) }}"
                                               method="POST">
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit"
-                                                    class="btn btn-primary">Toggle Editable</button>
+                                                    class="btn btn-success">Toggle Editable</button>
                                         </form>
                                     @endif
+                                    <form action="{{ route('quotations.destroy', $quotation->id) }}"
+                                          method="POST"
+                                          style="display: inline;"
+                                          onsubmit="return confirm('Are you sure you want to delete this quotation?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                                class="btn btn-danger">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
