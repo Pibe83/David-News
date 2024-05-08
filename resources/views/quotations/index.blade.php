@@ -30,7 +30,7 @@
 
 
                                     @if (auth()->user()->is_admin)
-                                        <form action="{{ route('quotations.update', $quotation->id) }}"
+                                        <form action="{{ route('quotations.update', $quotation) }}"
                                               method="POST">
                                             @csrf
                                             @method('PATCH')
@@ -38,7 +38,7 @@
                                                     class="btn btn-success">Toggle Editable</button>
                                         </form>
                                     @endif
-                                    <form action="{{ route('quotations.destroy', $quotation->id) }}"
+                                    <form action="{{ route('quotations.destroy', $quotation) }}"
                                           method="POST"
                                           style="display: inline;"
                                           onsubmit="return confirm('Are you sure you want to delete this quotation?')">

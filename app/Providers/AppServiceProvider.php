@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         News::observe(NewsObserver::class);
+
         Quotation::observe(QuotationObserver::class);
     }
 }

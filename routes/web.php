@@ -49,19 +49,29 @@ Route::prefix('news')
     });
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-
 Route::post('/like', [LikeController::class, 'like'])->name('like');
-
 Route::delete('/comments/{commentId}/unlike', [LikeController::class, 'unlikeComment'])->name('comment.unlike');
-
 Route::get('/likes/{contentId}', [LikeController::class, 'countLikes'])->name('count.likes');
-
 Route::post('/comment/{commentId}/like', [CommentController::class, 'like'])->name('comment.like');
 
-Route::get('/quotations', [QuotationController::class, 'index'])->name('quotations.index');
-Route::get('/quotations/create', [QuotationController::class, 'create'])->name('quotations.create');
-Route::post('/quotations', [QuotationController::class, 'store'])->name('quotations.store');
-Route::get('/quotations/{quotation}', [QuotationController::class, 'show'])->name('quotations.show');
-Route::get('/quotations/{quotation}/edit', [QuotationController::class, 'edit'])->name('quotations.edit');
-Route::put('/quotations/{quotation}', [QuotationController::class, 'update'])->name('quotations.update');
-Route::delete('/quotations/{quotation}', [QuotationController::class, 'destroy'])->name('quotations.destroy');
+/*
+ * QUOTATIONS
+ */
+Route::prefix('quotations')
+    ->name('quotations.')
+    ->group(function () {
+        Route::get('', [QuotationController::class, 'index'])
+            ->name('index');
+        Route::get('/create', [QuotationController::class, 'create'])
+            ->name('create');
+        Route::post('', [QuotationController::class, 'store'])
+            ->name('store');
+        Route::get('{quotation}', [QuotationController::class, 'show'])
+            ->name('show');
+        Route::get('{quotation}/edit', [QuotationController::class, 'edit'])
+            ->name('edit');
+        Route::put('{quotation}', [QuotationController::class, 'update'])
+            ->name('update');
+        Route::delete('{quotation}', [QuotationController::class, 'destroy'])
+            ->name('destroy');
+    });

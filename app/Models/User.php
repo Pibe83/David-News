@@ -45,6 +45,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_admin' => 'bool',
     ];
 
     public function comments()
@@ -65,5 +66,26 @@ class User extends Authenticatable
     public function quotations(): HasMany
     {
         return $this->hasMany(Quotation::class);
+    }
+
+    // MOVE TO TRAIT USERBOOLEANS
+    /**
+     * Check if it is admin.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+    /**
+     * Check if it is not admin.
+     *
+     * @return bool
+     */
+    public function isNotAdmin(): bool
+    {
+        return ! $this->isAdmin();
     }
 }

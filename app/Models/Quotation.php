@@ -13,12 +13,13 @@ class Quotation extends Model
         QuotationAccessors,
         QuotationMutators;
 
-    protected $fillable = [
-        'uuid',
-        'total_price',
-        'taxable_price',
-        'tax_price',
-        'is_editable',
-        'user_id',
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'created_at',
+        'updated_at',
     ];
 }
