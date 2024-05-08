@@ -90,9 +90,10 @@
                                     </a>
                                 </td>
                                 <td class="border text-center">
-                                    <a href="{{ route('news.show', $new) }}">
+                                    <a href="{{ route('news.show', $new->id) }}?{{ uniqid() }}">
                                         <i class="fa-solid fa-eye"></i>
                                     </a>
+
                                 </td>
                             </tr>
                         @endforeach

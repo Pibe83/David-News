@@ -51,9 +51,10 @@
                 </a>
 
                 <a class="ms-5"
-                   href="{{ route('home') }}">
+                   href="{{ route('quotations.create') }}">
                     Add Quotation
                 </a>
+
 
 
                 <button class="navbar-toggler"

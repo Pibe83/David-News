@@ -26,8 +26,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/quotation', [QuotationController::class, 'index'])->name('quotation');
-
 /*
  * NEWS
  */
@@ -51,10 +49,12 @@ Route::prefix('news')
     });
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+
+Route::post('/comment/{commentId}/like', [CommentController::class, 'like'])->name('comment.like');
+
 Route::post('/like', [LikeController::class, 'like'])->name('like');
 Route::delete('/comments/{commentId}/unlike', [LikeController::class, 'unlikeComment'])->name('comment.unlike');
 Route::get('/likes/{contentId}', [LikeController::class, 'countLikes'])->name('count.likes');
-Route::post('/comment/{commentId}/like', [CommentController::class, 'like'])->name('comment.like');
 
 /*
  * QUOTATIONS

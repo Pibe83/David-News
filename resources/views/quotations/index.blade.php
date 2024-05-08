@@ -28,25 +28,21 @@
 
                                 <td>
                                     @if (auth()->user()->is_admin)
-                                        <form action="{{ route('quotations.edit', $quotation) }}"
-                                              method="GET"
+                                        <a href="{{ route('quotations.edit', $quotation) }}"
+                                           class="btn btn-link"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    @endif
+                                    @if (auth()->user()->is_admin)
+                                        <form action="{{ route('quotations.destroy', $quotation) }}"
+                                              method="POST"
+                                              style="display: inline;"
+                                              onsubmit="return confirm('Are you sure you want to delete this quotation?')"
                                               class="d-inline">
                                             @csrf
-
+                                            @method('DELETE')
                                             <button type="submit"
-                                                    class="btn btn-link"><i class="fa-solid fa-pen-to-square"></i></button>
+                                                    class="btn btn-link"><i class="fa-solid fa-trash"></i></button>
                                         </form>
                                     @endif
-                                    <form action="{{ route('quotations.destroy', $quotation) }}"
-                                          method="POST"
-                                          style="display: inline;"
-                                          onsubmit="return confirm('Are you sure you want to delete this quotation?')"
-                                          class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="btn btn-link"><i class="fa-solid fa-trash"></i></button>
-                                    </form>
                                 </td>
 
                             </tr>

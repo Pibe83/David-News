@@ -69,7 +69,7 @@ class NewsController extends Controller
 
         $news->update($validatedData);
 
-        return redirect()->route('news.show', $news)
+        return redirect()->route('news.show', [$news, 'random' => uniqid()])
             ->with('success', 'Notizia aggiornata con successo!');
     }
 

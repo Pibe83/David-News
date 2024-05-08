@@ -15,7 +15,7 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('news.update', ['id' => $news->id]) }}"
+                        <form action="{{ route('news.update', ['news' => $news->id]) }}"
                               method="POST"
                               class="mt-5"
                               enctype="multipart/form-data">
