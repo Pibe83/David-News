@@ -61,7 +61,7 @@
                                                         <tr>
                                                             <th>Azione</th>
                                                             <th>Utente</th>
-                                                            <th>Timestamp</th>
+                                                            <th>Data</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

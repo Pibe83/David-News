@@ -79,5 +79,16 @@ Route::prefix('quotations')
             ->name('destroy');
     });
 
-Route::get('/quotation-history', [QuotationHistoryController::class, 'index'])->name('quotation_history.index');
-Route::get('/quotation-history/{id}', [QuotationHistoryController::class, 'show'])->name('quotation_history.show');
+/*
+ * QUOTATIONS-HISTORY
+ */
+
+Route::prefix('quotation-history')
+    ->name('quotation-history.')
+    ->group(function () {
+        Route::get('', [QuotationHistoryController::class, 'index'])
+            ->name('index');
+
+        Route::get('{quotation-history/{id}}', [QuotationHistoryController::class, 'show'])
+            ->name('show');
+    });
