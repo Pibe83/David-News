@@ -6,6 +6,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\QuotationHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,3 +78,6 @@ Route::prefix('quotations')
         Route::delete('{quotation}', [QuotationController::class, 'destroy'])
             ->name('destroy');
     });
+
+Route::get('/quotation-history', [QuotationHistoryController::class, 'index'])->name('quotation_history.index');
+Route::get('/quotation-history/{id}', [QuotationHistoryController::class, 'show'])->name('quotation_history.show');

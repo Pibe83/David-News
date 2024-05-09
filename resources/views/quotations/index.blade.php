@@ -20,18 +20,14 @@
                         @foreach ($quotations as $quotation)
                             <tr>
                                 <td>{{ $quotation->id }}</td>
-
                                 <td>{{ $quotation->total_price }}</td>
                                 <td>{{ $quotation->taxable_price }}</td>
                                 <td>{{ $quotation->tax_price }}</td>
                                 <td>{{ $quotation->is_editable ? 'Yes' : 'No' }}</td>
-
                                 <td>
                                     @if (auth()->user()->is_admin)
                                         <a href="{{ route('quotations.edit', $quotation) }}"
                                            class="btn btn-link"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    @endif
-                                    @if (auth()->user()->is_admin)
                                         <form action="{{ route('quotations.destroy', $quotation) }}"
                                               method="POST"
                                               style="display: inline;"
@@ -43,8 +39,46 @@
                                                     class="btn btn-link"><i class="fa-solid fa-trash"></i></button>
                                         </form>
                                     @endif
+                                    <button class="btn btn-link"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapse{{ $quotation->id }}"
+                                            aria-expanded="false"
+                                            aria-controls="collapse{{ $quotation->id }}"><i class="fa-solid fa-history"></i> History</button>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <div id="collapse{{ $quotation->id }}"
+                                         class="accordion-collapse collapse"
+                                         aria-labelledby="heading{{ $quotation->id }}"
+                                         data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <h6 class="fw-bold">Storico delle Modifiche per la Quotazione {{ $quotation->id }}</h6>
+                                            <ul>
 
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Azione</th>
+                                                            <th>Utente</th>
+                                                            <th>Timestamp</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($quotation->history as $change)
+                                                            <tr>
+                                                                <td>{{ $change->action }}</td>
+                                                                <td>{{ $change->user->name }}</td>
+                                                                <td>{{ $change->created_at }}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

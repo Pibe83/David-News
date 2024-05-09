@@ -23,6 +23,6 @@ trait QuotationMutators
 
     protected function getTaxRate()
     {
-        return 0.20;
+        return 0.21;
     }
 }

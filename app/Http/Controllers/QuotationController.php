@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quotation;
 use Illuminate\Http\Request;
+use App\Models\QuotationHistory;
 use Illuminate\Support\Facades\Auth;
 
 class QuotationController extends Controller
@@ -11,6 +12,11 @@ class QuotationController extends Controller
     public function index()
     {
         $quotations = Quotation::all();
+
+        // Itera attraverso ogni quotazione e recupera lo storico delle modifiche
+        foreach ($quotations as $quotation) {
+            $quotation->history = QuotationHistory::where('quotation_id', $quotation->id)->latest()->get();
+        }
 
         return view('quotations.index', compact('quotations'));
     }
@@ -72,6 +78,8 @@ class QuotationController extends Controller
 
     public function destroy(Quotation $quotation)
     {
+        $quotation->history()->delete();
+
         $quotation->delete();
 
         return response()->json(['message' => 'Quotation deleted successfully'], 200);

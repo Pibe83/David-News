@@ -88,4 +88,9 @@ class User extends Authenticatable
     {
         return ! $this->isAdmin();
     }
+
+    public function history()
+    {
+        return $this->hasMany(QuotationHistory::class, 'user_id');
+    }
 }
