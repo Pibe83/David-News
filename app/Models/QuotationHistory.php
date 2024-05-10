@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-// Importa il trait
 use App\Traits\Models\QuotationHistory\QuotationHistoryRelationships;
 
 class QuotationHistory extends Model
@@ -12,15 +11,5 @@ class QuotationHistory extends Model
 
     protected $table = 'quotation_history';
 
-    protected $fillable = ['quotation_id', 'user_id', 'action'];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function quotation()
-    {
-        return $this->belongsTo(Quotation::class, 'quotation_id');
-    }
+    protected $fillable = ['quotation_id', 'user_id', 'action', 'modified_value'];
 }

@@ -62,6 +62,7 @@
                                                             <th>Azione</th>
                                                             <th>Utente</th>
                                                             <th>Data</th>
+                                                            <th>Valore</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -70,6 +71,7 @@
                                                                 <td>{{ $change->action }}</td>
                                                                 <td>{{ $change->user->name }}</td>
                                                                 <td>{{ $change->created_at }}</td>
+                                                                <td>{{ $change->modified_value }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>

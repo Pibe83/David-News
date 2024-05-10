@@ -29,7 +29,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm sticky-top">
             <div class="container">
                 <a class="navbar-brand"
                    href="{{ url('/') }}">
@@ -129,6 +129,17 @@
 
         <main class="py-4">
             @yield('content')
+
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show"
+                     role="alert">
+                    {{ session('success') }}
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                </div>
+            @endif
         </main>
     </div>
 </body>

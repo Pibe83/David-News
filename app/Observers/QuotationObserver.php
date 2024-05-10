@@ -30,11 +30,11 @@ class QuotationObserver
 
     protected function saveHistory(Quotation $quotation, string $action)
     {
-        // Salva lo storico delle modifiche
         QuotationHistory::create([
             'quotation_id' => $quotation->id,
             'user_id' => auth()->id(),
             'action' => $action,
+            'modified_value' => $quotation->total_price,
         ]);
     }
 }
