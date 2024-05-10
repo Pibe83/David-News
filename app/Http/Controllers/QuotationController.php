@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Quotation;
 use Illuminate\Http\Request;
+use App\Mail\NewQuotationMail;
 use App\Models\QuotationHistory;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\NewQuotationNotification;
 
 class QuotationController extends Controller
 {
@@ -38,7 +42,11 @@ class QuotationController extends Controller
 
         $validatedData['user_id'] = $user->id;
 
-        Quotation::create($validatedData);
+        $quotation = Quotation::create($validatedData);
+
+        $quotation->user->notify(new NewQuotationNotification($quotation));
+
+        // Mail::to('davidscattone10@gmail.com')->send(new NewQuotationMail($quotation));
 
         return redirect()->route('quotations.store')
             ->with('success', 'Quotazione creata con successo!');

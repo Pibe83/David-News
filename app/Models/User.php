@@ -4,8 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\Models\User\UserBooleans;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Traits\Models\User\UserRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -13,7 +14,9 @@ class User extends Authenticatable
 {
     use HasApiTokens,
         HasFactory,
-        Notifiable;
+        Notifiable,
+        UserBooleans,
+        UserRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -47,50 +50,4 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'bool',
     ];
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-
-    public function news()
-    {
-        return $this->hasMany(News::class);
-    }
-
-    public function quotations(): HasMany
-    {
-        return $this->hasMany(Quotation::class);
-    }
-
-    // MOVE TO TRAIT USERBOOLEANS
-    /**
-     * Check if it is admin.
-     *
-     * @return bool
-     */
-    public function isAdmin(): bool
-    {
-        return $this->is_admin;
-    }
-
-    /**
-     * Check if it is not admin.
-     *
-     * @return bool
-     */
-    public function isNotAdmin(): bool
-    {
-        return ! $this->isAdmin();
-    }
-
-    public function history()
-    {
-        return $this->hasMany(QuotationHistory::class, 'user_id');
-    }
 }

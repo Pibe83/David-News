@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 trait QuotationAccessors
 {
-    public function getUuidAttribute($value)
+    public function getUuidAttribute($value): string
     {
         return Str::uuid($value);
     }

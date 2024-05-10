@@ -11,5 +11,10 @@ class QuotationHistory extends Model
 
     protected $table = 'quotation_history';
 
-    protected $fillable = ['quotation_id', 'user_id', 'action', 'modified_value'];
+    protected $fillable = [
+        'quotation_id',
+        'user_id',
+        'action',
+        'modified_value',
+    ];
 }
