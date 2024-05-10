@@ -6,6 +6,7 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use App\Traits\Models\User\UserBooleans;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use App\Traits\Models\User\UserRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,4 +51,14 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'bool',
     ];
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return array<string, string>|string
+     */
+    public function routeNotificationForMail(Notification $notification): array|string
+    {
+        return $this->email;
+    }
 }
