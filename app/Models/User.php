@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
-use App\Traits\Models\User\UserBooleans;
 use Illuminate\Notifications\Notifiable;
 use App\Traits\Models\User\UserRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +14,7 @@ class User extends Authenticatable
     use HasApiTokens,
         HasFactory,
         Notifiable,
-        UserBooleans,
+
         UserRelationships;
 
     /**
@@ -50,4 +49,24 @@ class User extends Authenticatable
         'password' => 'hashed',
         'is_admin' => 'bool',
     ];
+
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+
+    /**
+     * Check if the user is not an admin.
+     *
+     * @return bool
+     */
+    public function isNotAdmin(): bool
+    {
+        return ! $this->isAdmin();
+    }
 }
