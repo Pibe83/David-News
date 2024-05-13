@@ -25,7 +25,7 @@
                                 <td>{{ $quotation->tax_price }}</td>
                                 <td>{{ $quotation->is_editable ? 'Yes' : 'No' }}</td>
                                 <td>
-                                    @if (auth()->user()->is_admin)
+                                    @if (optional(auth()->user())->is_admin)
                                         <a href="{{ route('quotations.edit', $quotation) }}"
                                            class="btn btn-link"><i class="fa-solid fa-pen-to-square"></i></a>
                                         <form action="{{ route('quotations.destroy', $quotation) }}"

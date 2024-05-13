@@ -9,6 +9,12 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\NewQuotationNotification;
+use App\Notifications\NewQuotationNotificationError;
+use App\Notifications\NewQuotationNotificationMailer;
+use App\Notifications\NewQuotationNotificationSander;
+use App\Notifications\NewQuotationNotificationSubject;
+use App\Notifications\NewQuotationNotificationFormatting;
+use App\Notifications\NewQuotationNotificationToDatabase;
 
 class QuotationController extends Controller
 {
@@ -39,6 +45,18 @@ class QuotationController extends Controller
         $quotation = Quotation::create($validatedData);
 
         $quotation->user->notify(new NewQuotationNotification($quotation));
+
+        $quotation->user->notify(new NewQuotationNotificationError($quotation));
+
+        $quotation->user->notify(new NewQuotationNotificationFormatting($quotation));
+
+        $quotation->user->notify(new NewQuotationNotificationSander($quotation));
+
+        $quotation->user->notify(new NewQuotationNotificationSubject($quotation));
+
+        $quotation->user->notify(new NewQuotationNotificationMailer($quotation));
+
+        $quotation->user->notify(new NewQuotationNotificationToDatabase($quotation));
 
         // Mail::to('davidscattone10@gmail.com')->send(new NewQuotationMail($quotation));
 

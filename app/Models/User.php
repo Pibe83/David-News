@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 use App\Traits\Models\User\UserRelationships;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,5 +69,15 @@ class User extends Authenticatable
     public function isNotAdmin(): bool
     {
         return ! $this->isAdmin();
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return array<string, string>|string
+     */
+    public function routeNotificationForMail(Notification $notification): array|string
+    {
+        return 'example@example.com';
     }
 }
