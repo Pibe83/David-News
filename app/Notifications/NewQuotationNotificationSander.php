@@ -12,9 +12,8 @@ class NewQuotationNotificationSander extends Notification
 
     protected $invoice;
 
-    public function __construct($invoice)
+    public function __construct()
     {
-        $this->invoice = $invoice;
     }
 
     public function via($notifiable)

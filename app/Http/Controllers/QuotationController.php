@@ -54,7 +54,7 @@ class QuotationController extends Controller
 
         $quotation->user->notify(new NewQuotationNotificationSubject($quotation));
 
-        $quotation->user->notify(new NewQuotationNotificationMailer($quotation));
+        // $quotation->user->notify(new NewQuotationNotificationMailer($quotation));
 
         $quotation->user->notify(new NewQuotationNotificationToDatabase($quotation));
 

@@ -41,6 +41,7 @@ class NewQuotationNotificationError extends Notification
         return (new MailMessage)
             ->error()
             ->subject('Errore nella creazione della nuova quotazione')
+
             ->line('Si è verificato un errore durante la creazione della nuova quotazione.')
             ->line('Per favore, contatta il supporto per ulteriori informazioni.');
     }

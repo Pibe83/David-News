@@ -10,11 +10,8 @@ class NewQuotationNotificationMailer extends Notification
 {
     use Queueable;
 
-    protected $invoice;
-
-    public function __construct($invoice)
+    public function __construct()
     {
-        $this->invoice = $invoice;
     }
 
     public function via($notifiable)
