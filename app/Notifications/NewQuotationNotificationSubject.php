@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Quotation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -10,10 +11,11 @@ class NewQuotationNotificationSubject extends Notification
 {
     use Queueable;
 
-    protected $invoice;
+    protected $quotation;
 
-    public function __construct()
+    public function __construct(Quotation $quotation)
     {
+        $this->quotation = $quotation;
     }
 
     public function via($notifiable)
@@ -31,6 +33,7 @@ class NewQuotationNotificationSubject extends Notification
     public function toArray($notifiable)
     {
         return [
+            'message' => 'Nuova notifica soggetto',
         ];
     }
 }

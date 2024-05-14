@@ -66,6 +66,10 @@ class NewQuotationNotification extends Notification
     public function toArray($notifiable)
     {
         return [
+            'quotation_id' => $this->quotation->id,
+            'total_price' => $this->quotation->total_price,
+            'taxable_price' => $this->quotation->taxable_price,
+            'tax_price' => $this->quotation->tax_price,
         ];
     }
 }
