@@ -36,7 +36,7 @@ class NewQuotationNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -47,11 +47,14 @@ class NewQuotationNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $attachmentPath = public_path('pdf/SCTGNN53L04I992J_001709114340933_202403_01.pdf');
+
         return (new MailMessage)
             ->line('New quotation created:')
             ->line('Total price: ' . $this->quotation->total_price)
             ->line('Taxable price: ' . $this->quotation->taxable_price)
-            ->line('Tax price: ' . $this->quotation->tax_price);
+            ->line('Tax price: ' . $this->quotation->tax_price)
+            ->attach($attachmentPath);
     }
 
     /**

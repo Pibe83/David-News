@@ -6,14 +6,15 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewQuotationNotificationSubject extends Notification
+class CustomNotification extends Notification
 {
     use Queueable;
 
-    protected $invoice;
+    protected $quotation;
 
-    public function __construct()
+    public function __construct($quotation)
     {
+        $this->quotation = $quotation;
     }
 
     public function via($notifiable)
@@ -24,13 +25,16 @@ class NewQuotationNotificationSubject extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Notification Subject new')
-            ->line('Pagamenti');
+            ->subject('Custom Notification')
+            ->line('This is a custom notification message.')
+            ->line('Quotation Total Price: ' . $this->quotation->total_price);
     }
 
     public function toArray($notifiable)
     {
         return [
+            'quotation_id' => $this->quotation->id,
+            'total_price' => $this->quotation->total_price,
         ];
     }
 }

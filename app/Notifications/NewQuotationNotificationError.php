@@ -27,7 +27,7 @@ class NewQuotationNotificationError extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -44,5 +44,19 @@ class NewQuotationNotificationError extends Notification
 
             ->line('Si è verificato un errore durante la creazione della nuova quotazione.')
             ->line('Per favore, contatta il supporto per ulteriori informazioni.');
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            'error_message' => 'Message describing the error',
+        ];
+    }
+
+    public function toArray($notifiable)
+    {
+        return [
+            'error_message' => 'Message describing the error',
+        ];
     }
 }

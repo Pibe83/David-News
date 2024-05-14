@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
 use App\Mail\NewQuotationMail;
+use App\Mail\QuotationUpdatedMail;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\CustomNotification;
 use App\Notifications\NewQuotationNotification;
 use App\Notifications\NewQuotationNotificationError;
 use App\Notifications\NewQuotationNotificationMailer;
@@ -58,7 +60,9 @@ class QuotationController extends Controller
 
         $quotation->user->notify(new NewQuotationNotificationToDatabase($quotation));
 
-        // Mail::to('davidscattone10@gmail.com')->send(new NewQuotationMail($quotation));
+        $quotation->user->notify(new CustomNotification($quotation));
+
+        //   Mail::to('davidscattone10@gmail.com')->send(new NewQuotationMail($quotation));
 
         return redirect()->route('quotations.store')
             ->with('success', 'Quotazione creata con successo!');
@@ -92,6 +96,8 @@ class QuotationController extends Controller
         ]);
 
         $quotation->update($validatedData);
+
+        Mail::to($quotation->user->email)->send(new QuotationUpdatedMail($quotation));
 
         return redirect()->route('quotations.index')->with('success', 'Quotazione aggiornata con successo!');
     }

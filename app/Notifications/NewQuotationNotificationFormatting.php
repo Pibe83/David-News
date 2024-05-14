@@ -19,7 +19,7 @@ class NewQuotationNotificationFormatting extends Notification
 
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     public function toMail($notifiable)
