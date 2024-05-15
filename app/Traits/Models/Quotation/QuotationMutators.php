@@ -35,17 +35,7 @@ trait QuotationMutators
     public function setTotalPriceAttribute($value): void
     {
         $this->attributes['total_price'] = $value;
-        $this->attributes['taxable_price'] = $value / (1 + $this->getTaxRate());
+        $this->attributes['taxable_price'] = $value / (1 + self::taxRate);
         $this->attributes['tax_price'] = $value - $this->attributes['taxable_price'];
-    }
-
-    /**
-     * Retrieve tax rate.
-     *
-     * @return float
-     */
-    protected function getTaxRate(): float
-    {
-        return 0.22;
     }
 }

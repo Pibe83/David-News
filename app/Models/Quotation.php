@@ -17,6 +17,8 @@ class Quotation extends Model
         QuotationMutators,
         QuotationRelationships;
 
+    public const taxRate = 0.22;
+
     /**
      * The attributes that aren't mass assignable.
      *
