@@ -2,48 +2,48 @@
 
 <style>
     #comment-text {
-        max-height: 50px;
-        overflow-y: auto;
+        max-height: 50px !important;
+        overflow-y: auto !important;
     }
 
     .card .btn {
-        padding: 0.15rem 0.2rem;
-        font-size: 0.775rem;
+        padding: 0.15rem 0.2rem !important;
+        font-size: 0.775rem !important;
     }
 
     .custom-card {
         border: 2px solid #a59f9f !important;
         border-radius: 2px !important;
-        transition: box-shadow 0.6s ease;
+        transition: box-shadow 0.6s ease !important;
         /* Aggiungi una transizione per un effetto più fluido */
     }
 
     .custom-card:hover {
-        box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.1) !important;
         /* Aggiungi uno shadow su hover */
     }
 
     .comments-section {
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
     }
 
     .comment {
-        margin-bottom: 15px;
+        margin-bottom: 15px !important;
         display: none;
     }
 
     .comment.active {
-        display: block;
+        display: block !important;
     }
 
     .like-buttons {
-        display: flex;
-        align-items: center;
+        display: flex !important;
+        align-items: center !important;
     }
 
     .like-buttons button {
-        margin-right: 5px;
+        margin-right: 5px !important;
     }
 </style>
 
@@ -104,53 +104,54 @@
                 <div class="card mb-4 custom-card">
                     <div class="card-body">
 
-                        <h3 class="mb-3">Nuova news</>
+                        <div>Nuova news</div>
 
-                            <form action="{{ route('news.store') }}"
-                                  method="POST"
-                                  enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="title"
-                                           class="form-label">{{ __('Title') }}</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="title"
-                                           name="title"
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="subtitle"
-                                           class="form-label">{{ __('Subtitle') }}</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="subtitle"
-                                           name="subtitle"
-                                           required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="content"
-                                           class="form-label">{{ __('Content') }}</label>
-                                    <textarea class="form-control"
-                                              id="content"
-                                              name="content"
-                                              rows="5"
-                                              required></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="photo"
-                                           class="form-label">{{ __('Photo') }}</label>
-                                    <input type="file"
-                                           class="form-control"
-                                           id="photo"
-                                           name="photo"> <!-- Aggiunto campo di input di tipo file per il caricamento dell'immagine -->
-                                </div>
 
-                                <button type="submit"
-                                        class="btn btn-primary">{{ __('Create News') }}</button>
-                                <a href="{{ route('news.index') }}"
-                                   class="btn btn-secondary">{{ __('Back to News') }}</a>
-                            </form>
+                        <form action="{{ route('news.store') }}"
+                              method="POST"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="title"
+                                       class="form-label">{{ __('Title') }}</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="title"
+                                       name="title"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subtitle"
+                                       class="form-label">{{ __('Subtitle') }}</label>
+                                <input type="text"
+                                       class="form-control"
+                                       id="subtitle"
+                                       name="subtitle"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="content"
+                                       class="form-label">{{ __('Content') }}</label>
+                                <textarea class="form-control"
+                                          id="content"
+                                          name="content"
+                                          rows="5"
+                                          required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="photo"
+                                       class="form-label">{{ __('Photo') }}</label>
+                                <input type="file"
+                                       class="form-control"
+                                       id="photo"
+                                       name="photo"> <!-- Aggiunto campo di input di tipo file per il caricamento dell'immagine -->
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-primary">{{ __('Create News') }}</button>
+                            <a href="{{ route('news.index') }}"
+                               class="btn btn-secondary">{{ __('Back to News') }}</a>
+                        </form>
                     </div>
                 </div>
 
