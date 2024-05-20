@@ -1,23 +1,21 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Quotation;
 
+use App\Models\Quotation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewQuotationNotificationFormatting extends Notification
+class NewQuotationNotificationSander extends Notification
 {
     use Queueable;
 
     protected $quotation;
 
-    // protected $quotation;
-
-    public function __construct($quotation)
+    public function __construct(Quotation $quotation)
     {
         $this->quotation = $quotation;
-        // $this->quotation = $quotation;
     }
 
     public function via($notifiable)
@@ -25,12 +23,11 @@ class NewQuotationNotificationFormatting extends Notification
         return ['mail', 'database'];
     }
 
-    public function toMail($notifiable)
+    public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)->view(
-            'mail.invoice.paid',
-            ['quotation' => $this->quotation]
-        );
+        return (new MailMessage)
+            ->from('barrett@example.com', 'Barrett Blair')
+            ->line('Pagamento effettuato');
     }
 
     public function toArray($notifiable)

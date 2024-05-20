@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreNewsRequest;
 use App\Http\Controllers\Traits\NewsOperationsTrait;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class NewsController extends Controller
 {
@@ -33,15 +35,9 @@ class NewsController extends Controller
         return view('news.show', compact('news'));
     }
 
-    public function store(Request $request)
+    public function store(StoreNewsRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'required|string|max:255',
-            'content' => 'required|string',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_new' => 'nullable|boolean',
-        ]);
+        $validatedData = $request->validated();
 
         if ($request->hasFile('photo')) {
             $imagePath = $request->file('photo')->store('public', 'photos');

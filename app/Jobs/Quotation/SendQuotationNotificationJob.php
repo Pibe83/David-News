@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Jobs\Quotation;
 
 use App\Models\Quotation;
 use Illuminate\Bus\Queueable;
@@ -9,12 +9,12 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Notifications\CustomNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Notifications\NewQuotationNotification;
-use App\Notifications\NewQuotationNotificationError;
-use App\Notifications\NewQuotationNotificationSander;
-use App\Notifications\NewQuotationNotificationSubject;
-use App\Notifications\NewQuotationNotificationFormatting;
-use App\Notifications\NewQuotationNotificationToDatabase;
+use App\Notifications\Quotation\NewQuotationNotification;
+use App\Notifications\Quotation\NewQuotationNotificationError;
+use App\Notifications\Quotation\NewQuotationNotificationSander;
+use App\Notifications\Quotation\NewQuotationNotificationSubject;
+use App\Notifications\Quotation\NewQuotationNotificationFormatting;
+use App\Notifications\Quotation\NewQuotationNotificationToDatabase;
 
 class SendQuotationNotificationJob implements ShouldQueue
 {

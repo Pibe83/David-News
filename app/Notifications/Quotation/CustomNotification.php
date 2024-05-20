@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Quotation;
 
-use App\Models\Quotation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewQuotationNotificationSander extends Notification
+class CustomNotification extends Notification
 {
     use Queueable;
 
     protected $quotation;
 
-    public function __construct(Quotation $quotation)
+    public function __construct($quotation)
     {
         $this->quotation = $quotation;
     }
@@ -23,11 +22,12 @@ class NewQuotationNotificationSander extends Notification
         return ['mail', 'database'];
     }
 
-    public function toMail(object $notifiable): MailMessage
+    public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from('barrett@example.com', 'Barrett Blair')
-            ->line('Pagamento effettuato');
+            ->subject('Custom Notification')
+            ->line('This is a custom notification message.')
+            ->line('Quotation Total Price: ' . $this->quotation->total_price);
     }
 
     public function toArray($notifiable)
@@ -35,8 +35,6 @@ class NewQuotationNotificationSander extends Notification
         return [
             'quotation_id' => $this->quotation->id,
             'total_price' => $this->quotation->total_price,
-            'taxable_price' => $this->quotation->taxable_price,
-            'tax_price' => $this->quotation->tax_price,
         ];
     }
 }

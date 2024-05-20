@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
 use App\Mail\NewQuotationMail;
-use App\Mail\QuotationUpdatedMail;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Jobs\SendQuotationNotificationJob;
+use App\Http\Requests\StoreQuotationRequest;
+use App\Jobs\Quotation\SendQuotationNotificationJob;
+use App\Jobs\Quotation\SendQuotationUpdatedEmailJob;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class QuotationController extends Controller
 {
@@ -25,21 +27,15 @@ class QuotationController extends Controller
         return view('quotations.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreQuotationRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'total_price' => 'required|numeric',
-            'taxable_price' => 'nullable|numeric',
-            'tax_price' => 'nullable|numeric',
-        ]);
-
         $user = Auth::user();
-
+        $validatedData = $request->validated();
         $validatedData['user_id'] = $user->id;
 
         $quotation = Quotation::create($validatedData);
 
-        SendQuotationNotificationJob::dispatch($quotation)->onQueue('SendQuotationNotificationJob');
+        SendQuotationNotificationJob::dispatch($quotation)->onQueue('notifications');
 
         //   Mail::to('davidscattone10@gmail.com')->send(new NewQuotationMail($quotation));
 
@@ -76,7 +72,7 @@ class QuotationController extends Controller
 
         $quotation->update($validatedData);
 
-        Mail::to($quotation->user->email)->send(new QuotationUpdatedMail($quotation));
+        SendQuotationUpdatedEmailJob::dispatch($quotation)->onQueue('email');
 
         return redirect()->route('quotations.index')->with('success', 'Quotazione aggiornata con successo!');
     }

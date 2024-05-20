@@ -2,7 +2,7 @@
 
 namespace App\Traits\Models\User;
 
-trait UserBooleans
+trait UserBoolean
 {
     /**
      * Check if the user is an admin.
