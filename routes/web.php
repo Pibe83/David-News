@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\QuotationHistoryController;
 
@@ -76,7 +78,16 @@ Route::middleware('auth')->group(function () {
                 ->name('update');
             Route::delete('{quotation}', [QuotationController::class, 'destroy'])
                 ->name('destroy');
+
+            Route::get('/search', [QuotationController::class, 'search'])
+                ->name('search');
         });
+
+    Route::get('/search', [QuotationController::class, 'search'])
+        ->name('quotations.search');
+
+    Route::post('/create-batch', [BatchController::class, 'createBatch']);
+    Route::get('/batch-status/{batchId}', [BatchController::class, 'getBatchStatus']);
 
     /*
      * QUOTATIONS-HISTORY
@@ -95,6 +106,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/weather', [WeatherController::class, 'show'])->name('weather');
 });
 
 Route::get('/dashboard', function () {

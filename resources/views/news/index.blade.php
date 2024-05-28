@@ -311,7 +311,7 @@
                                                 <button type="submit"
                                                         class="btn btn-sm btn-primary">Like</button>
                                             </form>
-                                            <form action="{{ route('comment.unlike', ['commentId' => $like->id]) }}"
+                                            <form action="{{ route('comment.unlike', ['commentId' => $comment->id]) }}"
                                                   method="POST">
                                                 @csrf
                                                 @method('DELETE')
@@ -362,10 +362,6 @@
             </div>
         </div>
     </div>
-
-
-
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

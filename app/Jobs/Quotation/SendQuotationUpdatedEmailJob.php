@@ -3,6 +3,7 @@
 namespace App\Jobs\Quotation;
 
 use App\Models\Quotation;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use App\Mail\QuotationUpdatedMail;
 use Illuminate\Support\Facades\Mail;
@@ -13,7 +14,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 
 class SendQuotationUpdatedEmailJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable,
+        Dispatchable,
+        InteractsWithQueue,
+        Queueable,
+        SerializesModels;
 
     protected $quotation;
 
@@ -35,6 +40,10 @@ class SendQuotationUpdatedEmailJob implements ShouldQueue
      */
     public function handle()
     {
+        if ($this->batch() && $this->batch()->cancelled()) {
+            return;
+        }
+
         Mail::to($this->quotation->user->email)->send(new QuotationUpdatedMail($this->quotation));
     }
 }

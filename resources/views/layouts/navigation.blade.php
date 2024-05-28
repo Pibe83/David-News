@@ -42,6 +42,11 @@
                                 Add Quotation
                             </a>
 
+                            <a class="ms-5"
+                               href="{{ route('weather') }}">
+                                Weather
+                            </a>
+
 
 
                             <button class="navbar-toggler"

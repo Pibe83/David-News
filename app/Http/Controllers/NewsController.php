@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
 use App\Http\Requests\StoreNewsRequest;
+use App\Jobs\Quotation\ProcessNewsCreation;
 use App\Http\Controllers\Traits\NewsOperationsTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -44,7 +46,13 @@ class NewsController extends Controller
             $validatedData['photo'] = $imagePath;
         }
 
+        $validatedData['user_id'] = auth()->id();
+
         $news = News::create($validatedData);
+
+        /* $batch = Bus::batch([
+            new ProcessNewsCreation($news),
+        ])->dispatch(); */
 
         return redirect()->route('news.show', $news)
             ->with('success', 'Notizia creata con successo!');
@@ -61,6 +69,8 @@ class NewsController extends Controller
             'title' => 'required|string|max:255',
             'subtitle' => 'required|string|max:255',
             'content' => 'required|string',
+            'slug' => 'your-slug',
+            'user_id' => auth()->id(),
         ]);
 
         $news->update($validatedData);

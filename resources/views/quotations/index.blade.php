@@ -84,9 +84,68 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
+
+
+                        <form action="{{ route('quotations.search') }}"
+                              method="GET">
+                            <input type="text"
+                                   name="city"
+                                   placeholder="Inserisci il nome della città"
+                                   required>
+                            <button type="submit">Cerca</button>
+                        </form>
+
+                        @if ($weatherData)
+                            <div class="weather-container">
+
+                                <h2>Meteo per {{ $weatherDataLocation['name'] }}, {{ $weatherDataLocation['country'] }}</h2>
+                                <div class="weather-details">
+                                    <div>
+                                        <p><strong>Temperatura:</strong> {{ $weatherData['current']['temp_c'] }}°C</p>
+                                        <p><strong>Condizione:</strong> {{ $weatherData['current']['condition']['text'] }}</p>
+
+                                    </div>
+                                    <div>
+                                        <img src="https:{{ $weatherData['current']['condition']['icon'] }}"
+                                             alt="{{ $weatherData['current']['condition']['text'] }}">
+                                    </div>
+                                </div>
+                                <p><strong>Ultimo aggiornamento:</strong> {{ $weatherData['current']['last_updated'] }}</p>
+                            </div>
+                        @else
+                            <p>Impossibile ottenere i dati meteo.</p>
+                        @endif
+
+                        @if ($weatherData)
+                            <h2>Meteo attuale a {{ $city }}</h2>
+                            <p>Temperatura: {{ $weatherData['current']['temp_c'] }}°C</p>
+                            <p>Condizioni: {{ $weatherData['current']['condition']['text'] }}</p>
+
+                            {{-- Visualizza le previsioni per i prossimi giorni --}}
+                            <h2>Previsioni meteo per i prossimi giorni</h2>
+                            @foreach ($weatherData['forecast']['forecastday'] as $forecast)
+                                <div>
+                                    <h3>{{ \Carbon\Carbon::parse($forecast['date'])->format('d/m/Y') }}</h3>
+                                    <p>Temperatura massima: {{ $forecast['day']['maxtemp_c'] }}°C</p>
+                                    <p>Temperatura minima: {{ $forecast['day']['mintemp_c'] }}°C</p>
+                                    <p>Condizioni: {{ $forecast['day']['condition']['text'] }}</p>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>Non è stato possibile recuperare i dati meteo.</p>
+                        @endif
+
+
+
+
+
+
+
+
             </div>
+            </tbody>
+            </table>
         </div>
+    </div>
     </div>
 @endsection
